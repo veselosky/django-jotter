@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ms-python.isort",
+    "ms-python.python",
+    "batisteo.vscode-django",
+    "ms-python.black-formatter"
+  ]
+}

@@ -1,0 +1,14 @@
+{% extends "jotter/base.html" %}
+{% block body_content %}
+{% if notebook_list %}
+<ul>
+  {% for notebook in notebook_list %}
+  <li><a href="{% url "jotter_notebook_detail" notebook_slug=notebook.slug %}">{{ notebook.name }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>You don't have any notebooks yet.
+  <a href="{% url "jotter_notebook_create" %}">Create a notebook</a> now.
+</p>
+{% endif %}
+{% endblock body_content %}
