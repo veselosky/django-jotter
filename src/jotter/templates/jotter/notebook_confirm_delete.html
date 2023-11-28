@@ -1,0 +1,9 @@
+{% extends "jotter/base.html" %}
+{% block note_detail %}
+<h1>Confirm Deletion</h1>
+<p>Are you sure you want to delete the notebook "{{ notebook.name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Confirm">
+</form>
+{% endblock note_detail %}

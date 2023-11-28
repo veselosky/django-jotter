@@ -3,11 +3,15 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.NotebookListView.as_view(), name="jotter_index"),
     path(
         "notebook/create/",
         views.NotebookCreateView.as_view(),
         name="jotter_notebook_create",
+    ),
+    path(
+        "<slug:notebook_slug>/delete/",
+        views.NotebookDeleteView.as_view(),
+        name="jotter_notebook_delete",
     ),
     path(
         "<slug:notebook_slug>/",
@@ -24,4 +28,10 @@ urlpatterns = [
         views.NoteUpdateView.as_view(),
         name="jotter_note_update",
     ),
+    path(
+        "<slug:notebook_slug>/<int:pk>/delete/",
+        views.NoteDeleteView.as_view(),
+        name="jotter_note_delete",
+    ),
+    path("", views.NotebookListView.as_view(), name="jotter_index"),
 ]

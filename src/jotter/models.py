@@ -5,14 +5,17 @@ from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 
 
-class NoteManager(models.Manager):
+class NotebookManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_deleted=False)
+        return super().get_queryset().select_related("user")
 
 
-class NoteQuerySet(models.QuerySet):
-    def delete(self):
-        return super().update(is_deleted=True)
+class NotebookQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_deleted=False)
+
+    def mark_deleted(self):
+        return self.update(is_deleted=True)
 
 
 class Notebook(models.Model):
@@ -21,6 +24,9 @@ class Notebook(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)
+
+    objects = NotebookManager.from_queryset(NotebookQuerySet)()
 
     class Meta:
         constraints = [
@@ -32,6 +38,22 @@ class Notebook(models.Model):
     def get_absolute_url(self):
         return reverse("jotter_notebook_detail", kwargs={"slug": self.slug})
 
+    def __str__(self):
+        return self.name
+
+
+class NoteManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related("notebook", "notebook__user")
+
+
+class NoteQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_deleted=False)
+
+    def mark_deleted(self):
+        return self.update(is_deleted=True)
+
 
 class Note(models.Model):
     notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE)
@@ -42,7 +64,7 @@ class Note(models.Model):
     is_deleted = models.BooleanField(default=False)
 
     objects = NoteManager.from_queryset(NoteQuerySet)()
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def get_absolute_url(self):
         return reverse(
