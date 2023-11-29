@@ -11,6 +11,7 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).parent
 base_in = PROJECT_DIR / "pyproject.toml"
 base_reqs = PROJECT_DIR / "requirements.txt"
+dev_reqs = PROJECT_DIR / "requirements-dev.txt"
 
 
 def get_django_package() -> str:
@@ -91,12 +92,23 @@ def _compile_and_sync(PYTHON: str, args: T.Iterable):
         PYTHON,
         "-o",
         str(base_reqs.relative_to(PROJECT_DIR)),
+        "--extra=project",
+        *args,
+        str(base_in.relative_to(PROJECT_DIR)),
+    )
+    _compile(
+        PYTHON,
+        "-o",
+        str(dev_reqs.relative_to(PROJECT_DIR)),
         "--extra=dev",
+        "--extra=project",
         *args,
         str(base_in.relative_to(PROJECT_DIR)),
     )
     print("Updating the current virtual environment.")
     _sync(PYTHON, str(base_reqs))
+    print("Installing app in editable mode.")
+    _pip(PYTHON, "install", "-e", ".")
 
 
 class Commands:
