@@ -183,6 +183,7 @@ except ImportError:
 
 # Rich test output
 TEST_RUNNER = "django_rich.test.RichRunner"
+SITE_ID = 1
 
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
