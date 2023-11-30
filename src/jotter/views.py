@@ -37,9 +37,6 @@ class NotebookCreateView(LoginRequiredMixin, CreateView):
             form.instance.slug = slugify(form.instance.name)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse("jotter_index")
-
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context["notebook_list"] = self.request.user.notebook_set.active()

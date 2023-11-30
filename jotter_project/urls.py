@@ -22,8 +22,9 @@ urlpatterns = [
     path("admin/doc/", include("django.contrib.admindocs.urls")),
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("tinymce/", include("tinymce.urls")),
     path("jotter/", include("jotter.urls")),
-    path("", gv.TemplateView.as_view(template_name="index.html"), name="")
+    path("", gv.TemplateView.as_view(template_name="index.html"), name=""),
 ]
 
 if settings.DEBUG:
