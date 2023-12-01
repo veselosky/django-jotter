@@ -1,0 +1,10 @@
+{% extends "jotter/base.html" %}
+{% block note_detail %}
+{% if note_list %}
+<p>This notebook contains {{ note_list.count }} notes.</p>
+{% else %}
+<p>This notebook doesn't have any notes yet.
+  <a href="{% url "jotter_note_create" notebook_slug=notebook.slug %}">Create a note</a>.
+</p>
+{% endif %}
+{% endblock note_detail %}

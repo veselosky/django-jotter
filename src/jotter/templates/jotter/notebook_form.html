@@ -1,0 +1,9 @@
+{% extends "jotter/base.html" %}
+{% block note_detail %}
+<h1>Create a notebook</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock note_detail %}

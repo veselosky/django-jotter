@@ -1,0 +1,57 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Jotter: Your notes, your way{% endblock title %}</title>
+<link rel="stylesheet" href="{% static "jotter.css" %}">
+</head>
+<body>
+{% block body_content %}
+<header class="jotter_app_header">
+  <h1>Jotter</h1>
+  <a class="go-button" href="{% url "jotter_notebook_create" %}">New Notebook</a>
+  {% if notebook %}
+  <a class="go-button" href="{% url "jotter_note_create" notebook_slug=notebook.slug %}">New Note</a>
+  <a class="danger-button" href="{% url "jotter_notebook_delete" notebook_slug=notebook.slug %}">Delete Notebook {{notebook.name}}</a>
+  {% endif %}
+</header>
+<main id="note-ui">
+  <section id="notebook-list">
+    <h2>Notebooks</h2>
+    {% for notebook in notebook_list %}
+    {% if loop.first %}<ul>{% endif %}
+      <li><a href="{% url "jotter_notebook_detail" notebook_slug=notebook.slug %}">{{ notebook.name }}</a></li>
+    {% if loop.last %}</ul>{% endif %}
+    {% empty %}
+    <p>You don't have any notebooks yet.
+      <a href="{% url "jotter_notebook_create" %}">Create a notebook</a> now.
+    </p>
+    {% endfor %}
+  </section>
+  {% if note_list %}
+  <section id="note-list">
+    <h2>Notes</h2>
+  {% block note_list %}
+    {% for note in note_list %}
+    {% if loop.first %}<ul>{% endif %}
+    <li><a href="{% url "jotter_note_update" notebook_slug=note.notebook.slug pk=note.pk %}">{{ note.title|default:"Untitled" }}</a></li>
+    {% if loop.last %}</ul>{% endif %}
+    {% empty %}
+    <p>This notebook doesn't have any notes yet.
+      <a href="{% url "jotter_note_create" notebook_slug=notebook.slug %}">Create a note</a>.
+    </p>
+    {% endfor %}
+  {% endblock note_list %}
+  </section>
+  {% endif %}
+  <section id="note-detail">
+    {% block note_detail %}
+    {% endblock note_detail %}
+  </section>
+</main>
+
+
+{% endblock body_content %}
+</body>
+</html>

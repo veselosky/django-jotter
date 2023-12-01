@@ -1,0 +1,24 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+#note-ui {
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr 1fr 4fr;
+  grid-template-rows: auto;
+  grid-template-areas: "notebook-list note-list note-detail";
+}
+#note-ui section {
+  border: 1px solid #ccc;
+}
+#notebook-list {
+  grid-area: notebook-list;
+}
+#note-list {
+  grid-area: note-list;
+}
+#note-detail {
+  grid-area: note-detail;
+}
