@@ -16,12 +16,12 @@
   <a class="danger-button" href="{% url "jotter_notebook_delete" notebook_slug=notebook.slug %}">Delete Notebook {{notebook.name}}</a>
   {% endif %}
 </header>
-<main id="note-ui">
-  <section id="notebook-list">
+<main class="note-ui">
+  <section class="notebook-list">
     <h2>Notebooks</h2>
-    {% for notebook in notebook_list %}
+    {% for n in notebook_list %}
     {% if loop.first %}<ul>{% endif %}
-      <li><a href="{% url "jotter_notebook_detail" notebook_slug=notebook.slug %}">{{ notebook.name }}</a></li>
+      <li{% if n == notebook %} class="current"{% endif %} ><a href="{% url "jotter_notebook_detail" notebook_slug=n.slug %}">{{ n.name }}</a></li>
     {% if loop.last %}</ul>{% endif %}
     {% empty %}
     <p>You don't have any notebooks yet.
@@ -29,23 +29,25 @@
     </p>
     {% endfor %}
   </section>
-  {% if note_list %}
-  <section id="note-list">
+  <section class="note-list">
     <h2>Notes</h2>
   {% block note_list %}
-    {% for note in note_list %}
+    {% for n in note_list %}
     {% if loop.first %}<ul>{% endif %}
-    <li><a href="{% url "jotter_note_update" notebook_slug=note.notebook.slug pk=note.pk %}">{{ note.title|default:"Untitled" }}</a></li>
+    <li{%if n == note%} class="current"{%endif%}><a href="{% url "jotter_note_update" notebook_slug=n.notebook.slug pk=n.pk %}">{{ n.title|default:"Untitled" }}</a></li>
     {% if loop.last %}</ul>{% endif %}
     {% empty %}
+    {% if notebook %}
     <p>This notebook doesn't have any notes yet.
       <a href="{% url "jotter_note_create" notebook_slug=notebook.slug %}">Create a note</a>.
     </p>
+    {% else %}
+    <p>Select a notebook to see its notes.</p>
+    {% endif %}
     {% endfor %}
   {% endblock note_list %}
   </section>
-  {% endif %}
-  <section id="note-detail">
+  <section class="note-detail">
     {% block note_detail %}
     {% endblock note_detail %}
   </section>

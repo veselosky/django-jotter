@@ -3,22 +3,41 @@
 *:after {
   box-sizing: border-box;
 }
-#note-ui {
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+/*
+#note-ui is the main UI container for the app.
+TODO Mobile 1-col layout
+*/
+.note-ui {
   display: grid;
   gap: 0;
   grid-template-columns: 1fr 1fr 4fr;
   grid-template-rows: auto;
   grid-template-areas: "notebook-list note-list note-detail";
 }
-#note-ui section {
+.note-ui section {
   border: 1px solid #ccc;
 }
-#notebook-list {
+.note-ui li {
+  list-style: none;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+.note-ui li.current {
+  border: 1px solid black;
+}
+.notebook-list {
   grid-area: notebook-list;
 }
-#note-list {
+.note-list {
   grid-area: note-list;
 }
-#note-detail {
+.note-detail {
   grid-area: note-detail;
 }
