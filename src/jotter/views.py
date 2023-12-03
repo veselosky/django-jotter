@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.text import slugify
@@ -9,6 +10,8 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
+from taggit.forms import TagWidget
+from tinymce.widgets import TinyMCE
 
 from .models import Note, Notebook
 
@@ -92,10 +95,34 @@ class NoteListView(LoginRequiredMixin, ListView):
         return qs
 
 
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ["title", "content", "tags"]
+        widgets = {
+            "content": TinyMCE(
+                mce_attrs={
+                    "toolbar": (
+                        "undo redo | bold italic | link | code | fullscreen"
+                        " | bullist numlist | table | hr | removeformat | help"
+                    ),
+                    "menubar": True,
+                    "plugins": (
+                        "advlist anchor autosave code codesample emoticons fullscreen "
+                        "help hr link lists paste preview quickbars searchreplace "
+                        "table textpattern visualblocks visualchars wordcount"
+                    ),
+                },
+            ),
+            "title": forms.TextInput(attrs={"placeholder": "Title", "title": "Title"}),
+            "tags": TagWidget(attrs={"placeholder": "Tags", "title": "Tags"}),
+        }
+
+
 class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
     template_name = "jotter/note_form.html"
-    fields = ["title", "content", "tags"]
+    form_class = NoteForm
 
     def form_valid(self, form):
         form.instance.notebook = Notebook.objects.get(
@@ -118,7 +145,7 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Note
     template_name = "jotter/note_form.html"
-    fields = ["title", "content", "tags"]
+    form_class = NoteForm
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)

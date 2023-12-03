@@ -1,15 +1,14 @@
 {% extends "jotter/base.html" %}
+{% block extra_head %}{{form.media}}{% endblock extra_head %}
 {% block note_detail %}
-<h1>{% if note %}Edit{% else %}Create{% endif %} a note</h1>
 {{ form.errors }}
-<form method="post">
+<form method="post" class="note-form">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
+  <div class="note-form-title-container">{{form.title}}<button class="note-form-save">Save</button>
+  </div>
+  <div>{{form.content}}</div>
+  <div>{{form.tags}}
+  </div>
+  <div class="helptext">{{form.tags.help_text}}</div>
 </form>
-{% if note %}
-<form class="note-delete-form" action="{% url "jotter_note_delete" notebook_slug=note.notebook.slug pk=note.pk %}" method="post">
-  {% csrf_token %}<input class="danger" type="submit" value="Delete Note">
-</form>
-{% endif %}
 {% endblock note_detail %}

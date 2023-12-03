@@ -5,23 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Jotter: Your notes, your way{% endblock title %}</title>
 <link rel="stylesheet" href="{% static "jotter.css" %}">
+{% block extra_head %}{% endblock extra_head %}
 </head>
 <body>
 {% block body_content %}
 <header class="jotter_app_header">
   <h1>Jotter</h1>
-  <a class="go-button" href="{% url "jotter_notebook_create" %}">New Notebook</a>
-  {% if notebook %}
-  <a class="go-button" href="{% url "jotter_note_create" notebook_slug=notebook.slug %}">New Note</a>
-  <a class="danger-button" href="{% url "jotter_notebook_delete" notebook_slug=notebook.slug %}">Delete Notebook {{notebook.name}}</a>
-  {% endif %}
 </header>
 <main class="note-ui">
   <section class="notebook-list">
-    <h2>Notebooks</h2>
+    <header class="notebook-list-header">
+      <h2>Notebooks</h2>
+      <a class="go-button symbol-button add" aria-label="New Notebook" href="{% url "jotter_notebook_create" %}"><i class="bi-plus"></i></a>
+    </header>
     {% for n in notebook_list %}
     {% if loop.first %}<ul>{% endif %}
-      <li{% if n == notebook %} class="current"{% endif %} ><a href="{% url "jotter_notebook_detail" notebook_slug=n.slug %}">{{ n.name }}</a></li>
+      <li{% if n == notebook %} class="current"{% endif %} ><a class="note-ui-link" href="{% url "jotter_notebook_detail" notebook_slug=n.slug %}">{{ n.name }}</a></li>
     {% if loop.last %}</ul>{% endif %}
     {% empty %}
     <p>You don't have any notebooks yet.
@@ -30,11 +29,15 @@
     {% endfor %}
   </section>
   <section class="note-list">
-    <h2>Notes</h2>
+    <header class="note-list-header">
+      <h2>Notes</h2>{% if notebook %}
+      <a class="go-button symbol-button add" aria-label="New Note" href="{% url "jotter_note_create" notebook_slug=notebook.slug %}"><i class="bi-plus"></i></a>
+      {% endif %}
+    </header>
   {% block note_list %}
     {% for n in note_list %}
     {% if loop.first %}<ul>{% endif %}
-    <li{%if n == note%} class="current"{%endif%}><a href="{% url "jotter_note_update" notebook_slug=n.notebook.slug pk=n.pk %}">{{ n.title|default:"Untitled" }}</a></li>
+    <li{%if n == note%} class="current"{%endif%}><a class="note-ui-link" href="{% url "jotter_note_update" notebook_slug=n.notebook.slug pk=n.pk %}">{{ n.title|default:"Untitled" }}</a></li>
     {% if loop.last %}</ul>{% endif %}
     {% empty %}
     {% if notebook %}
