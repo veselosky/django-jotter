@@ -8,6 +8,7 @@
   --border-radius: 0.25rem;
   --link-color: darkgreen;
   --link-color-inverse: greenyellow;
+  --symbol-button-size: 1.5em;
 }
 *,
 *:before,
@@ -69,8 +70,8 @@ TODO Mobile 1-col layout
   box-shadow: 0 0 1em 0.5em greenyellow;
 }
 .symbol-button {
-  width: 2rem;
-  height: 2rem;
+  width: var(--symbol-button-size);
+  height: var(--symbol-button-size);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -78,8 +79,8 @@ TODO Mobile 1-col layout
   text-decoration: none;
 }
 i.bi-plus {
-  width: 2em;
-  height: 2em;
+  width: var(--symbol-button-size);
+  height: var(--symbol-button-size);
 }
 i.bi-plus::before {
   content: "";
@@ -88,8 +89,8 @@ i.bi-plus::before {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-plus' viewBox='0 0 16 16'> <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4'/></svg>");
   background-repeat: no-repeat;
   /* background-size: 2rem 2rem; */
-  width: 2em;
-  height: 2em;
+  width: var(--symbol-button-size);
+  height: var(--symbol-button-size);
 }
 .notebook-list {
   grid-area: notebook-list;
