@@ -9,6 +9,7 @@
   --link-color: darkgreen;
   --link-color-inverse: greenyellow;
   --symbol-button-size: 1.5em;
+  --max-list-column-width: 25%;
 }
 *,
 *:before,
@@ -20,7 +21,19 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.jotter_app_header {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  padding-left: 0.25rem;
+}
+.jotter_app_header h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 2em;
   line-height: 1.5;
 }
 /*
@@ -28,11 +41,9 @@ body {
 TODO Mobile 1-col layout
 */
 .note-ui {
-  display: grid;
-  gap: 0;
-  grid-template-columns: 1fr 1fr 4fr;
-  grid-template-rows: auto;
-  grid-template-areas: "notebook-list note-list note-detail";
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
 }
 .note-ui-link {
   text-decoration: none;
@@ -59,41 +70,12 @@ TODO Mobile 1-col layout
   border-top: 1px solid #ccc;
   padding: 0.5rem;
 }
-.go-button {
-  background-color: greenyellow;
-  border: 1px solid green;
-  color: darkgreen;
-  transition: box-shadow 0.25s ease-in-out;
-}
-.go-button:hover,
-.go-button:focus {
-  box-shadow: 0 0 1em 0.5em greenyellow;
-}
-.symbol-button {
-  width: var(--symbol-button-size);
-  height: var(--symbol-button-size);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-}
-i.bi-plus {
-  width: var(--symbol-button-size);
-  height: var(--symbol-button-size);
-}
-i.bi-plus::before {
-  content: "";
-  color: darkgreen;
-  display: inline-block;
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-plus' viewBox='0 0 16 16'> <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4'/></svg>");
-  background-repeat: no-repeat;
-  /* background-size: 2rem 2rem; */
-  width: var(--symbol-button-size);
-  height: var(--symbol-button-size);
-}
 .notebook-list {
-  grid-area: notebook-list;
+  /* grid-area: notebook-list; */
+  flex-grow: 1;
+  max-width: var(--max-list-column-width);
+  max-height: 100%;
+  overflow-y: scroll;
   background-color: var(--background-color-inverse);
   color: var(--color-inverse);
 }
@@ -101,12 +83,23 @@ i.bi-plus::before {
   background-color: slategray;
 }
 .note-list {
-  grid-area: note-list;
+  /* grid-area: note-list; */
+  flex-grow: 1;
+  max-width: var(--max-list-column-width);
+  max-height: 100%;
+  overflow-y: scroll;
 }
 .note-detail {
-  grid-area: note-detail;
+  /* grid-area: note-detail; */
+  flex-grow: 4;
 }
 /* FORM Styling */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: stretch;
+}
 .note-form > div {
   display: flex;
   justify-content: space-between;
@@ -136,11 +129,49 @@ i.bi-plus::before {
   font-size: 1.5em;
   min-width: 8rem;
 }
+.note-form-content-container {
+  flex-grow: 1;
+}
 .note-form textarea {
   display: block;
+  width: 100%;
+  height: 100%;
 }
 .note-form div.helptext {
   display: inline-block;
   font-size: 0.75rem;
   color: #999;
+}
+/* CLASSES used globally */
+.go-button {
+  background-color: greenyellow;
+  border: 1px solid green;
+  color: darkgreen;
+  transition: box-shadow 0.25s ease-in-out;
+}
+.go-button:hover,
+.go-button:focus {
+  box-shadow: 0 0 1em 0.5em greenyellow;
+}
+.symbol-button {
+  width: var(--symbol-button-size);
+  height: var(--symbol-button-size);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+i.bi-plus {
+  width: var(--symbol-button-size);
+  height: var(--symbol-button-size);
+}
+i.bi-plus::before {
+  content: "";
+  color: darkgreen;
+  display: inline-block;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-plus' viewBox='0 0 16 16'> <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4'/></svg>");
+  background-repeat: no-repeat;
+  width: var(--symbol-button-size);
+  height: var(--symbol-button-size);
 }

@@ -6,9 +6,8 @@
   {% csrf_token %}
   <div class="note-form-title-container">{{form.title}}<button class="note-form-save">Save</button>
   </div>
-  <div>{{form.content}}</div>
-  <div>{{form.tags}}
-  </div>
+  <div class="note-form-content-container">{{form.content}}</div>
+  <div>{{form.tags}}</div>
   <div class="helptext">{{form.tags.help_text}}</div>
 </form>
 {% endblock note_detail %}

@@ -10,7 +10,7 @@
 <body>
 {% block body_content %}
 <header class="jotter_app_header">
-  <h1>Jotter</h1>
+  <h1>Jotter{% if notebook %}: {{notebook.name}}{% endif %}</h1>
 </header>
 <main class="note-ui">
   <section class="notebook-list">
@@ -55,7 +55,7 @@
     {% endblock note_detail %}
   </section>
 </main>
-
+<footer></footer>
 
 {% endblock body_content %}
 </body>
