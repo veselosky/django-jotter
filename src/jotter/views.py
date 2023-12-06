@@ -112,6 +112,7 @@ class NoteForm(forms.ModelForm):
                         "help hr link lists paste preview quickbars searchreplace "
                         "table textpattern visualblocks visualchars wordcount"
                     ),
+                    "height": "100%",
                 },
             ),
             "title": forms.TextInput(attrs={"placeholder": "Title", "title": "Title"}),
