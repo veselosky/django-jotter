@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     # Third party apps:
     "django_extensions",
     "taggit",
-    "tinymce",
     # Core Django apps below custom so we can override their templates
     "django.contrib.admin",
     "django.contrib.admindocs",

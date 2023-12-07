@@ -8,10 +8,9 @@ requires-python = ">=3.8"
 # Dependencies for the reusable app, as installed in any Django project
 dependencies = [
     "django >= 4.2, < 5.3",
-    "pillow >= 10.0.1",
-    "easy-thumbnails >= 2.8.4",
+    # "pillow >= 10.0.1",
+    # "easy-thumbnails >= 2.8.4",
     "django-taggit >= 5.0.1",
-    "django-tinymce >= 3.6, < 3.7",
 ]
 
 [project.optional-dependencies]

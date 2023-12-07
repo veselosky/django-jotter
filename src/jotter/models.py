@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
-from tinymce.models import HTMLField
 
 
 class NotebookManager(models.Manager):
@@ -58,7 +57,7 @@ class NoteQuerySet(models.QuerySet):
 class Note(models.Model):
     notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True)
-    content = HTMLField(blank=True)
+    content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
