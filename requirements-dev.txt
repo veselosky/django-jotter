@@ -16,7 +16,7 @@ coverage==7.3.2
     # via django-jotter (pyproject.toml)
 decorator==5.1.1
     # via ipython
-django==4.2.7
+django==4.2.11
     # via
     #   django-debug-toolbar
     #   django-extensions
